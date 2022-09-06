@@ -128,7 +128,7 @@ Memory::Node* Memory::joinWithNearestFreeNodes(Memory::Node* node) {
 	delete node;
 	return resNode;
 }
-void Memory::free(int startIndex) {
+Memory::MemoryBlock Memory::free(int startIndex) {
 	Node* cur = nullptr;
 	for (cur = head; cur != nullptr; cur = cur->next) {
 		if (cur->info.startIndex == startIndex) {
@@ -137,13 +137,17 @@ void Memory::free(int startIndex) {
 	}
 	if (cur == nullptr) {
 		throw invalid_argument("no memory block with such startIndex");
-		return;
+		return Memory::MemoryBlock();
 	}
+	
+	auto oldInfo = cur->info;
+
 	cur->info.isOccupied = false;
 	cur->info.occupiedBy = "";
 
 	cur = Memory::joinWithNearestFreeNodes(cur);
-	int k = 9;
+
+	return oldInfo;
 }
 
 vector<Memory::Node*> Memory::getAllForProcess(string process) {
@@ -156,11 +160,14 @@ vector<Memory::Node*> Memory::getAllForProcess(string process) {
 	}
 	return result;
 }
-void Memory::freeAllForProcess(string process) {
+vector<Memory::MemoryBlock> Memory::freeAllForProcess(string process) {
 	auto nodes = Memory::getAllForProcess(process);
+	auto oldInfo = vector<Memory::MemoryBlock>(0);
 	for (auto node : nodes) {
+		oldInfo.push_back(node->info);
 		Memory::free(node->info.startIndex);
 	}
+	return oldInfo;
 }
 
 Memory::Statistics Memory::getStatistics() {
@@ -185,6 +192,8 @@ Memory::Statistics Memory::getStatistics() {
 	return stats;
 }
 std::ostream& operator<< (std::ostream& out, Memory::Statistics stats) {
+	out << "=============MEMORY STATS=============" << endl;
+	
 	out << "Memory (free/occupied): ";
 	out << "(" << stats.freeMemory << " / " << stats.occupiedMemory << ")" << endl;
 
@@ -231,4 +240,11 @@ Memory::MemoryBlock::MemoryBlock(int startIndex, int length, bool isOccupied, st
 	this->length = length;
 	this->isOccupied = isOccupied;
 	this->occupiedBy = occupiedBy;
+}
+
+std::ostream& operator<< (std::ostream& out, vector<Memory::MemoryBlock> blocks) {
+	for (auto block : blocks) {
+		out << block << endl;
+	}
+	return out;
 }

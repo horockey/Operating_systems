@@ -8,18 +8,18 @@ int main() {
 	Memory mem = Memory(100);
 	cout << mem.getStatistics() << endl;
 	
-	mem.addByBestFit(20, "process_a");
-	mem.addByBestFit(30, "process_b");
-	mem.addByBestFit(10, "process_b");
-	mem.addByBestFit(25, "process_c");
+	cout << "Occupy block:" << endl << mem.addByBestFit(20, "process_a") << endl;
+	cout << "Occupy block:" << endl << mem.addByBestFit(30, "process_b") << endl;
+	cout << "Occupy block:" << endl << mem.addByBestFit(10, "process_b") << endl;
+	cout << "Occupy block:" << endl << mem.addByBestFit(25, "process_c") << endl;
 	
 	cout << mem.getStatistics() << endl;
 
-	mem.free(0);
+	cout << "Free block:" << endl << mem.free(0) << endl;
 
 	cout << mem.getStatistics() << endl;
 
-	mem.freeAllForProcess("process_b");
+	cout << "Free blocks:" << mem.freeAllForProcess("process_b");
 
 	cout << mem.getStatistics() << endl;
 

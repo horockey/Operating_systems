@@ -26,6 +26,7 @@ public:
 		int occupiedMemory;
 		vector<MemoryBlock> blocks;
 	};
+
 private:
 	class Node {
 	public:
@@ -39,7 +40,6 @@ private:
 
 	Node* head;
 	Node* tail;
-	Statistics statistics;
 
 	Node* getByBestFit(int size);
 	vector<Node*> getAllForProcess(string process);
@@ -48,10 +48,11 @@ private:
 public:
 	Memory(int maxMemorySize);
 	MemoryBlock addByBestFit(int size, string process);
-	void free(int startIndex);
-	void freeAllForProcess(string process);
+	MemoryBlock free(int startIndex);
+	vector<MemoryBlock> freeAllForProcess(string process);
 	Statistics getStatistics();
 };
 
 std::ostream& operator<< (std::ostream&, Memory::Statistics);
 std::ostream& operator<< (std::ostream&, Memory::MemoryBlock);
+std::ostream& operator<< (std::ostream&, vector<Memory::MemoryBlock>);
