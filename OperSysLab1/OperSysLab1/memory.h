@@ -47,6 +47,8 @@ private:
 	Node* joinWithNearestFreeNodes(Node* node);
 public:
 	Memory(int maxMemorySize);
+	Memory() {};
+	~Memory();
 	MemoryBlock addByBestFit(int size, string process);
 	MemoryBlock free(int startIndex);
 	vector<MemoryBlock> freeAllForProcess(string process);

@@ -8,6 +8,17 @@ Memory::Memory(int maxMemorySize) {
 	
 	this->tail = this->head;
 }
+Memory::~Memory() {
+	Memory::Node* cur = nullptr;
+	for (cur = this->head; cur != nullptr; cur = cur->next) {
+		if (cur->prev != nullptr) {
+			delete cur->prev;
+		}
+		if (cur == this->tail) {
+			delete cur;
+		}
+	}
+}
 
 Memory::Node* Memory::getByBestFit(int size) {
 	Memory::Node* cur;
