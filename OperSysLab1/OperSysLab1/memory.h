@@ -11,7 +11,7 @@ public:
 		int length;
 		bool isOccupied;
 		string occupiedBy;
-
+		
 		MemoryBlock();
 		MemoryBlock(int startIndex, int length, bool isOccupied, string occupiedBy);
 
