@@ -79,3 +79,7 @@ Cars passed: %d
 `, p.carsOnService, p.carsServed, p.carsPassed)
 	}
 }
+
+func (p *Problem3) Description() string {
+	return fmt.Sprintf("Auto-station modelling")
+}

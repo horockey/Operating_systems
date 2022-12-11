@@ -44,3 +44,7 @@ func (p *Problem1) Run() {
 	}
 	time.Sleep(time.Second)
 }
+
+func (p *Problem1) Description() string {
+	return "Async print several files"
+}

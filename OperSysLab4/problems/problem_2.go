@@ -91,3 +91,7 @@ func fatalOnErr(msg string, err error) {
 		log.Fatal(msg, err)
 	}
 }
+
+func (p *Problem2) Description() string {
+	return "Draw figures using 2 processes"
+}

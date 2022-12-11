@@ -1,6 +1,9 @@
 package main
 
-import "main/problems"
+import (
+	"fmt"
+	"main/problems"
+)
 
 var problemsDict map[string]problems.Problem
 
@@ -32,7 +35,15 @@ func init() {
 }
 
 func main() {
-	// problemsDict["p1"].Run()
-	// problemsDict["p2"].Run()
-	// problemsDict["p3"].Run()
+	fmt.Println("Enter problem name to run:")
+	for key, pr := range problemsDict {
+		fmt.Printf("%s: %s\n", key, pr.Description())
+	}
+	var choise string
+	fmt.Scanf("%s", &choise)
+	if pr, ok := problemsDict[choise]; ok {
+		pr.Run()
+	} else {
+		fmt.Printf("Unknown problem name: %s\n", choise)
+	}
 }
