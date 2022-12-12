@@ -16,6 +16,7 @@ func init() {
 		"p4": &problems.Problem4{},
 		"p5": &problems.Problem5{},
 		"p6": &problems.Problem6{},
+		"p7": &problems.Problem7{},
 	}
 	problemsDict["p1"].Init(problems.Problem1Args{
 		Files: []string{
@@ -65,6 +66,9 @@ func init() {
 			{'.', '.', '.', '.', '.', '.', '.', '.', '.', '.'},
 			{'.', '.', '.', 'S', '.', '.', '.', '.', '.', '.'},
 		},
+	})
+	problemsDict["p7"].Init(problems.Problem7Args{
+		Arr: []int{},
 	})
 }
 
