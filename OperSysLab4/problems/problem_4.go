@@ -10,7 +10,7 @@ import (
 	"gopkg.in/natefinch/npipe.v2"
 )
 
-const PipeName string = `\\.\pipe\copying_server_pipe`
+const CopyingServerPipeName string = `\\.\pipe\copying_server_pipe`
 
 type Problem4 struct {
 }
@@ -33,7 +33,7 @@ func (p *Problem4) Run() {
 }
 
 func (p *Problem4) client(src, dst string) error {
-	pipe, err := npipe.Dial(PipeName)
+	pipe, err := npipe.Dial(CopyingServerPipeName)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func (p *Problem4) client(src, dst string) error {
 }
 
 func (p *Problem4) server() error {
-	listener, err := npipe.Listen(PipeName)
+	listener, err := npipe.Listen(CopyingServerPipeName)
 	if err != nil {
 		return err
 	}

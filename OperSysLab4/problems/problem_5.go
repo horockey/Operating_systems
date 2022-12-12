@@ -8,6 +8,8 @@ import (
 	"gopkg.in/natefinch/npipe.v2"
 )
 
+const CryptoServerPipeName string = `\\.\pipe\crypto_server_pipe`
+
 type Problem5 struct {
 }
 
@@ -29,7 +31,7 @@ func (p *Problem5) Run() {
 }
 
 func (p *Problem5) client(src string) error {
-	pipe, err := npipe.Dial(PipeName)
+	pipe, err := npipe.Dial(CryptoServerPipeName)
 	if err != nil {
 		return err
 	}
@@ -44,7 +46,7 @@ func (p *Problem5) client(src string) error {
 }
 
 func (p *Problem5) server() error {
-	listener, err := npipe.Listen(PipeName)
+	listener, err := npipe.Listen(CryptoServerPipeName)
 	if err != nil {
 		return err
 	}
