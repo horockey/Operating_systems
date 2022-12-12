@@ -8,6 +8,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"os/exec"
 	"time"
 )
 
@@ -45,7 +46,13 @@ func (p *Problem2) Init(args interface{}) {
 
 func (p *Problem2) Run() {
 	startChan := make(chan struct{})
-	go p.drawCanvas(startChan)
+	go func() {
+		res := p.drawCanvas(startChan)
+		err := exec.Command("powershell.exe", "start", res).Start()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}()
 	fmt.Println("Enter any string to trigger...")
 	var s string
 	fmt.Fscan(os.Stdin, &s)
@@ -53,7 +60,7 @@ func (p *Problem2) Run() {
 	time.Sleep(time.Second)
 }
 
-func (p *Problem2) drawCanvas(startChan chan struct{}) {
+func (p *Problem2) drawCanvas(startChan chan struct{}) string {
 	<-startChan
 	canvas := image.NewRGBA(image.Rect(0, 0, 600, 600))
 	rand.Seed(time.Now().UnixNano())
@@ -64,12 +71,14 @@ func (p *Problem2) drawCanvas(startChan chan struct{}) {
 		col := p.colors[i%len(p.colors)]
 		p.drawRect(canvas, x0, y0, w, h, col)
 	}
+	resName := fmt.Sprintf("D:\\Repos\\Operating_systems\\OperSysLab4\\assets\\2\\result_%s.png", time.Now().Format("2006-01-02_15_04_05"))
 	out, err := os.Create(
-		fmt.Sprintf("D:\\Repos\\Operating_systems\\OperSysLab4\\assets\\2\\result_%s.png", time.Now().Format("2006-01-02_15_04_05")),
+		resName,
 	)
 	fatalOnErr("creating image file: ", err)
 	defer out.Close()
 	png.Encode(out, canvas)
+	return resName
 }
 
 func (p *Problem2) drawRect(img *image.RGBA, x0, y0, w, h int, col color.Color) {

@@ -81,5 +81,5 @@ Cars passed: %d
 }
 
 func (p *Problem3) Description() string {
-	return fmt.Sprintf("Auto-station modelling")
+	return "Auto-station modelling"
 }
