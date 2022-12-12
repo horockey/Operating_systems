@@ -14,6 +14,7 @@ func init() {
 		"p2": &problems.Problem2{},
 		"p3": &problems.Problem3{},
 		"p4": &problems.Problem4{},
+		"p5": &problems.Problem5{},
 	}
 	problemsDict["p1"].Init(problems.Problem1Args{
 		Files: []string{
@@ -34,6 +35,8 @@ func init() {
 		NewCarMinSec:    1,
 		NewCarMaxSec:    4,
 	})
+	problemsDict["p4"].Init("")
+	problemsDict["p5"].Init("")
 }
 
 func main() {
