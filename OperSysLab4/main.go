@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"main/problems"
+	"sort"
 )
 
 var problemsDict map[string]problems.Problem
@@ -12,6 +13,7 @@ func init() {
 		"p1": &problems.Problem1{},
 		"p2": &problems.Problem2{},
 		"p3": &problems.Problem3{},
+		"p4": &problems.Problem4{},
 	}
 	problemsDict["p1"].Init(problems.Problem1Args{
 		Files: []string{
@@ -36,8 +38,15 @@ func init() {
 
 func main() {
 	fmt.Println("Enter problem name to run:")
-	for key, pr := range problemsDict {
-		fmt.Printf("%s: %s\n", key, pr.Description())
+	avaliableKeys := make([]string, 0)
+	for key := range problemsDict {
+		avaliableKeys = append(avaliableKeys, key)
+	}
+	sort.Slice(avaliableKeys, func(i, j int) bool {
+		return avaliableKeys[i] < avaliableKeys[j]
+	})
+	for _, key := range avaliableKeys {
+		fmt.Printf("%s: %s\n", key, problemsDict[key].Description())
 	}
 	var choise string
 	fmt.Scanf("%s", &choise)
