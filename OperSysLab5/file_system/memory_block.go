@@ -4,5 +4,5 @@ type MemoryBlock[T any] struct {
 	Data   T
 	IsFree bool
 
-	Next *MemoryBlock[T]
+	next *MemoryBlock[T]
 }

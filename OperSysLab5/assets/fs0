@@ -1,1 +1,68 @@
-[0xc0000041e0 0xc0000041c8 0xc0000041b0 0xc000004198 0xc000004180 0xc000004168 0xc000004150 0xc000004138 0xc000004120 0xc000004108 0xc0000040f0 0xc0000040d8 0xc0000040c0 0xc0000040a8 0xc000004090 0xc000004078]
+{
+	"memory": [
+		{
+			"Data": 7,
+			"IsFree": false
+		},
+		{
+			"Data": 4,
+			"IsFree": false
+		},
+		{
+			"Data": 61,
+			"IsFree": false
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		},
+		{
+			"Data": 0,
+			"IsFree": true
+		}
+	]
+}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"main/file_system"
 )
@@ -13,9 +14,16 @@ func main() {
 	})
 	blks, err := fs.Allocate(3)
 	fatalOnErr(err)
-	err = fs.Write([]int{7, 4, 61}, blks)
-	fatalOnErr(err)
-	fs.Save()
+	fatalOnErr(fs.Write([]int{7, 4, 61}, blks))
+	fatalOnErr(fs.Save())
+	fatalOnErr(fs.Free(blks))
+	fatalOnErr(fs.Load())
+	buf := make([]int, 3)
+	fatalOnErr(fs.Read(blks, buf))
+	for _, el := range buf {
+		fmt.Printf("%d ", el)
+	}
+	fmt.Println()
 }
 
 func fatalOnErr(err error) {

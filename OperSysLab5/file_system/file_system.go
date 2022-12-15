@@ -1,7 +1,9 @@
 package file_system
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 )
 
@@ -34,7 +36,7 @@ func NewFileSystem[T any](params *FileSystemParams) *FileSystem[T] {
 		if i < params.BlockCount-1 {
 			next = memory[i+1]
 		}
-		memory[i] = &MemoryBlock[T]{IsFree: true, Next: next}
+		memory[i] = &MemoryBlock[T]{IsFree: true, next: next}
 	}
 	return &FileSystem[T]{
 		storageFileName: params.StorageFileName,
@@ -57,7 +59,7 @@ func (fs *FileSystem[T]) Allocate(blocks int) ([]int, error) {
 		res = append(res, idx)
 		blocksLeft--
 		if last != nil {
-			last.Next = fs.memory[idx]
+			last.next = fs.memory[idx]
 		}
 		last = fs.memory[idx]
 
@@ -109,17 +111,37 @@ func (fs *FileSystem[T]) Read(blockNumbers []int, buf []T) error {
 }
 
 func (fs *FileSystem[T]) Save() error {
+	obj := struct {
+		Memory []*MemoryBlock[T] `json:"memory"`
+	}{
+		Memory: fs.memory,
+	}
 	f, err := os.Create(fs.storageFileName)
 	if err != nil {
 		return err
 	}
-	// var buf bytes.Buffer
-	// enc := gob.NewEncoder(&buf)
-	// enc.Encode(fs.memory)
-	// _, err = f.Write(buf.Bytes())
-	_, err = f.Write([]byte(fmt.Sprintf("%+v", fs.memory)))
+	data, err := json.MarshalIndent(obj, "", "\t")
 	if err != nil {
 		return err
 	}
-	return nil
+	_, err = f.Write(data)
+	return err
+}
+
+func (fs *FileSystem[T]) Load() error {
+	f, err := os.Open(fs.storageFileName)
+	if err != nil {
+		return err
+	}
+	var data []byte
+	data, err = ioutil.ReadAll(f)
+	if err != nil {
+		return err
+	}
+	obj := struct {
+		Memory []*MemoryBlock[T] `json:"memory"`
+	}{}
+	err = json.Unmarshal(data, &obj)
+	fs.memory = obj.Memory
+	return err
 }
