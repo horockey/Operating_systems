@@ -7,7 +7,16 @@ import (
 )
 
 func main() {
-	fs := file_system.NewFileSystem[int](&file_system.FileSystemParams{
+	// lab5ShowOff()
+	fs := file_system.NewFileSystem()
+	err := fs.NewFile("/1.txt")
+	fatalOnErr(err)
+	fs.WriteToFile("/1.txt", []byte("Hello world"))
+	fmt.Println()
+}
+
+func lab5ShowOff() {
+	fs := file_system.NewMemory[int](&file_system.MemoryParams{
 		StorageFileName: `D:\Repos\Operating_systems\OperSysLab5\assets\fs0`,
 		BlockSize:       8,
 		BlockCount:      16,
