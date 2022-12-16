@@ -8,11 +8,23 @@ import (
 
 func main() {
 	// lab5ShowOff()
+
 	fs := file_system.NewFileSystem()
 	err := fs.NewFile("/1.txt")
 	fatalOnErr(err)
-	fs.WriteToFile("/1.txt", []byte("Hello world"))
-	fmt.Println()
+	fs.WriteFile("/1.txt", []byte("Hello world"))
+	data, err := fs.ReadFile("/1.txt")
+	fatalOnErr(err)
+	fmt.Printf("%s\n", string(data))
+	fs.NewDir("/my_folder")
+	fatalOnErr(fs.NewFile("/my_folder/2.txt"))
+	fatalOnErr(fs.WriteFile("/my_folder/2.txt", []byte("file 2 content")))
+	data, err = fs.ReadFile("/my_folder/2.txt")
+	fatalOnErr(err)
+	fmt.Printf("%s\n", string(data))
+	// fatalOnErr(fs.DelDir("/my_folder"))
+	fs.Memory.Save()
+	fs.GetDirInfo("/")
 }
 
 func lab5ShowOff() {
